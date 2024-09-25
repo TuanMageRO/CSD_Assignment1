@@ -3,6 +3,7 @@ package Implementation;
 import Object.Node;
 import Object.Train;
 import Validation.checkInput;
+import java.text.ParseException;
 
 public class Menu {
     private final linkedList trainList;
@@ -13,13 +14,13 @@ public class Menu {
         input = new checkInput();
     }
 
-    public void run() {
+    public void run() throws ParseException {
         while (true) {
             displayMenu();
             int choice = input.getValidInteger("Enter your choice: ", 1, 11);
             switch (choice) {
                 case 1:
-                    trainList.loadDataFromFile("D:\\FA24_S3\\CSD_Ex\\CSD_LinkedList\\src\\train_data.txt");
+                    trainList.loadDataFromFile("D:\\FA24_S3\\CSD_Ex\\CSD_Assignment1_E\\src\\train_data.txt");
                     break;
                 case 2:
                     trainList.displayData();

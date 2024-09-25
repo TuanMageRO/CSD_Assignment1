@@ -8,9 +8,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Scanner;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 
 public class linkedList {
     public Node head;
@@ -18,16 +18,7 @@ public class linkedList {
     private final Scanner sc = new Scanner(System.in);
     
     public boolean checkArrivalPlace(Train trains) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            Date departureDate = sdf.parse(trains.getDepartureTime());
-            Date arrivalDate = sdf.parse(trains.getArrivalPlace());
-            return !arrivalDate.before(departureDate); // arrival time is before departure time
-            // arrival time is after departure time
-        } catch (ParseException e) {
-            System.err.println("Invalid date format");
-            return false; // or throw an exception, depending on your requirements
-        }
+        return !trains.getArrivalPlace().equalsIgnoreCase(trains.getDeparturePlace());
     }
     
     public boolean checkArivvalTime(Train trains) throws ParseException {
@@ -36,8 +27,8 @@ public class linkedList {
         Date arrival = sdf.parse(trains.getArrivalTime());
         return depature.before(arrival);
     }
-
-    public void addFirst(Train in) {
+    
+    public void addFirst(Train in) throws ParseException {
         if(checkArrivalPlace(in) && checkArivvalTime(in)) {
             Node newNode = new Node(in);
             if (head == null) {
@@ -53,7 +44,7 @@ public class linkedList {
         }
     }
 
-    public void addLast(Train in) {
+    public void addLast(Train in) throws ParseException  {
         if(checkArrivalPlace(in) && checkArivvalTime(in)) {
             Node newNode = new Node(in);
             if (head == null) {
@@ -79,7 +70,7 @@ public class linkedList {
         return null;
     }
 
-    public void addAfterPosition(Train in, int position) {
+    public void addAfterPosition(Train in, int position) throws ParseException {
         Node newNode = new Node(in);
 
         if (position == 1) {
@@ -163,7 +154,7 @@ public class linkedList {
         } while (swapped);
     }
 
-    public void loadDataFromFile(String fileName) {
+    public void loadDataFromFile(String fileName) throws ParseException {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -179,7 +170,7 @@ public class linkedList {
 
     public void displayData() {
         Node current = head;
-        System.out.println("tcode        |   name   |  seat  |  booked  | departure_place |  arrival_place  |    departure_time    |  arrival_time");
+        System.out.println("    tcode    |   name   |  seat  |  booked  | departure_place |  arrival_place  |    departure_time    |  arrival_time");
         System.out.println("--------------------------------------------------------------------------------------------");
         while (current != null) {
             Train train = current.data;
